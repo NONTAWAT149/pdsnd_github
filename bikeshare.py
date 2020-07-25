@@ -71,7 +71,10 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    df = pd.read_csv(CITY_DATA[city])
+    try:
+        df = pd.read_csv(CITY_DATA[city])
+    except:
+        print('No data file available, please check')
     
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['hour'] = df['Start Time'].apply(lambda x : x.hour)
@@ -186,7 +189,7 @@ def user_stats(df):
 
 
 def main():
-    # The main program starts at here
+
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
@@ -210,6 +213,7 @@ def main():
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
+            print('Your answer is NO, we will stop the program')
             break
 
 
